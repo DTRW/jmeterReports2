@@ -1,0 +1,897 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testResults version="1.2">
+<sample t="154" it="0" lt="0" ct="0" ts="1660708383992" s="true" lb="_DateAndVarSet" rc="200" rm="OK" tn="Test Finishing 1-1" dt="text" de="" by="0" sby="0" sc="1" ec="0" ng="1" na="1" hn="DESKTOP-HVGSLE1">
+  <responseHeader class="java.lang.String"></responseHeader>
+  <requestHeader class="java.lang.String"></requestHeader>
+  <responseData class="java.lang.String"></responseData>
+  <responseFile class="java.lang.String"></responseFile>
+  <samplerData class="java.lang.String">import groovy.json.JsonSlurper
+import org.apache.jmeter.services.FileServer;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+def jsonSlurper = new JsonSlurper()
+String file_path = FileServer.getFileServer().getBaseDir()+File.separator+&quot;..&quot;+File.separator+&quot;template&quot;+File.separator+&quot;finishing_config.json&quot;
+def fileContents = new File(file_path)
+def object = jsonSlurper.parseText(fileContents.getText(&apos;UTF-8&apos;))
+
+if (false) {
+ 	vars.put(&quot;cur_run&quot;,vars.get(&quot;cur_run_manual&quot;))
+} else {
+	vars.put(&quot;datetimeend&quot;,&apos;1660708383992&apos;)
+	vars.put(&quot;datetimestart&quot;,&apos;1660708382706&apos;)
+	vars.put(&quot;cur_run&quot;,&quot;17-08-22_05:53 0.0.0&quot;)
+}
+vars.put(&quot;datecreate&quot;,&apos;1660708382706&apos;)
+def time3 =  &apos;17.08.2022&apos;
+def folger_id = &quot;&quot;
+def template_page = &quot;&quot;
+def slack_thread=&quot;null&quot;
+def slack_channel=&quot;&quot;
+def flag = false
+
+object.projects.each{
+	if (it.containsKey(vars.get(&quot;project_name&quot;))){
+		log.info(it.toString())
+		log.info(it.get(vars.get(&quot;project_name&quot;)).toString())
+		vars.put(&quot;default_as_rt&quot;,it.get(vars.get(&quot;project_name&quot;)).get(&quot;default_as_rt&quot;).toString())
+		it.get(vars.get(&quot;project_name&quot;)).test_name.each{
+			log.info(it.toString())
+			if (it.containsKey(vars.get(&quot;test_name&quot;))){
+				vars.put(&quot;folder_id&quot;,it.get(vars.get(&quot;test_name&quot;)).get(&quot;folder_id&quot;).toString())
+				vars.put(&quot;template_page&quot;,it.get(vars.get(&quot;test_name&quot;)).get(&quot;template_page&quot;).toString())
+				vars.put(&quot;slack_channel&quot;,it.get(vars.get(&quot;test_name&quot;)).get(&quot;slack_channel&quot;).toString())
+				vars.put(&quot;slack_thread&quot;,it.get(vars.get(&quot;test_name&quot;)).get(&quot;slack_thread&quot;).toString())	
+				flag= true 
+				log.info(&quot;YOUR PROJECT IS - &quot; + vars.get(&quot;project_name&quot;))
+			}
+		}
+	}
+}
+
+if (!flag) {
+	log.info(&quot;PROJECT DON&apos;T MATCH ANY CONFIG, PLEASE CHECK THE JSON&quot;)
+	ctx.getThread().stop()	
+
+}
+log.info(&quot;Parameters: project_name = &quot; + vars.get(&quot;project_name&quot;) + &quot; version = &quot; + vars.get(&quot;version&quot;) + &quot; folder_id = &quot; + vars.get(&quot;folder_id&quot;) + &quot; template_page = &quot; + vars.get(&quot;template_page&quot;) + &quot; slack_channel = &quot; + vars.get(&quot;slack_channel&quot;) + &quot; slack_thread = &quot; + vars.get(&quot;slack_thread&quot;) +  &quot; test_name = &quot; + vars.get(&quot;test_name&quot;) + &quot; namespace = &quot; + props.get(&quot;namespace&quot;)+  &quot; default_as_rt = &quot; + vars.get(&quot;default_as_rt&quot;))</samplerData>
+</sample>
+<sample t="15" it="0" lt="0" ct="0" ts="1660708384147" s="true" lb="_VersionAndTitleGenerate" rc="200" rm="OK" tn="Test Finishing 1-1" dt="text" de="" by="0" sby="0" sc="1" ec="0" ng="1" na="1" hn="DESKTOP-HVGSLE1">
+  <responseHeader class="java.lang.String"></responseHeader>
+  <requestHeader class="java.lang.String"></requestHeader>
+  <responseData class="java.lang.String"></responseData>
+  <responseFile class="java.lang.String"></responseFile>
+  <samplerData class="java.lang.String">def vers = &apos;&apos;&apos;0.0.0&apos;&apos;&apos;.replaceAll(&quot;\r\n|\r|\n&quot;,&quot;&quot;).replaceAll(&quot;&quot;,&quot;&quot;).replaceAll(&quot;\&quot;&quot;,&quot;&quot;)
+vars.put(&quot;version_out&quot;,vers)
+def title = &quot;v&quot;+vers+&quot;_d&quot; + &apos;17-08-22_05:53&apos;
+vars.put(&quot;title&quot;,title)
+log.info(&quot;Version And Title is OK: &quot; + title)
+</samplerData>
+</sample>
+<httpSample t="0" it="0" lt="0" ct="0" ts="1660708384185" s="false" lb="_CreateDraftReport" rc="Non HTTP response code: java.net.URISyntaxException" rm="Non HTTP response message: Expected closing bracket for IPv6 address at index 15: https://[https://aws-tools.standardbank.co.za/confluence]/wiki/rest/api/content/" tn="Test Finishing 1-1" dt="text" de="" by="1377" sby="0" sc="1" ec="1" ng="1" na="1" hn="DESKTOP-HVGSLE1">
+  <responseHeader class="java.lang.String"></responseHeader>
+  <requestHeader class="java.lang.String"></requestHeader>
+  <responseData class="java.lang.String">java.net.URISyntaxException: Expected closing bracket for IPv6 address at index 15: https://[https://aws-tools.standardbank.co.za/confluence]/wiki/rest/api/content/&#xd;
+	at java.base/java.net.URI$Parser.fail(URI.java:2915)&#xd;
+	at java.base/java.net.URI$Parser.failExpecting(URI.java:2921)&#xd;
+	at java.base/java.net.URI$Parser.parseServer(URI.java:3294)&#xd;
+	at java.base/java.net.URI$Parser.parseAuthority(URI.java:3218)&#xd;
+	at java.base/java.net.URI$Parser.parseHierarchical(URI.java:3160)&#xd;
+	at java.base/java.net.URI$Parser.parse(URI.java:3116)&#xd;
+	at java.base/java.net.URI.&lt;init&gt;(URI.java:600)&#xd;
+	at java.base/java.net.URL.toURI(URL.java:1018)&#xd;
+	at org.apache.jmeter.protocol.http.sampler.HTTPHC4Impl.sample(HTTPHC4Impl.java:620)&#xd;
+	at org.apache.jmeter.protocol.http.sampler.HTTPSamplerProxy.sample(HTTPSamplerProxy.java:66)&#xd;
+	at org.apache.jmeter.protocol.http.sampler.HTTPSamplerBase.sample(HTTPSamplerBase.java:1296)&#xd;
+	at org.apache.jmeter.protocol.http.sampler.HTTPSamplerBase.sample(HTTPSamplerBase.java:1285)&#xd;
+	at org.apache.jmeter.threads.JMeterThread.doSampling(JMeterThread.java:638)&#xd;
+	at org.apache.jmeter.threads.JMeterThread.executeSamplePackage(JMeterThread.java:558)&#xd;
+	at org.apache.jmeter.threads.JMeterThread.processSampler(JMeterThread.java:489)&#xd;
+	at org.apache.jmeter.threads.JMeterThread.run(JMeterThread.java:256)&#xd;
+	at java.base/java.lang.Thread.run(Thread.java:834)&#xd;
+</responseData>
+  <responseFile class="java.lang.String"></responseFile>
+  <cookies class="java.lang.String"></cookies>
+  <method class="java.lang.String">POST</method>
+  <queryString class="java.lang.String"></queryString>
+  <java.net.URL>https://[https://aws-tools.standardbank.co.za/confluence]/wiki/rest/api/content/</java.net.URL>
+</httpSample>
+
+<sample t="48" it="0" lt="0" ct="0" ts="1660711862471" s="true" lb="_DateAndVarSet" rc="200" rm="OK" tn="Test Finishing 1-1" dt="text" de="" by="0" sby="0" sc="1" ec="0" ng="1" na="1" hn="DESKTOP-HVGSLE1">
+  <responseHeader class="java.lang.String"></responseHeader>
+  <requestHeader class="java.lang.String"></requestHeader>
+  <responseData class="java.lang.String"></responseData>
+  <responseFile class="java.lang.String"></responseFile>
+  <samplerData class="java.lang.String">import groovy.json.JsonSlurper
+import org.apache.jmeter.services.FileServer;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+def jsonSlurper = new JsonSlurper()
+String file_path = FileServer.getFileServer().getBaseDir()+File.separator+&quot;..&quot;+File.separator+&quot;template&quot;+File.separator+&quot;finishing_config.json&quot;
+def fileContents = new File(file_path)
+def object = jsonSlurper.parseText(fileContents.getText(&apos;UTF-8&apos;))
+
+if (false) {
+ 	vars.put(&quot;cur_run&quot;,vars.get(&quot;cur_run_manual&quot;))
+} else {
+	vars.put(&quot;datetimeend&quot;,&apos;1660711862471&apos;)
+	vars.put(&quot;datetimestart&quot;,&apos;1660711862138&apos;)
+	vars.put(&quot;cur_run&quot;,&quot;17-08-22_06:51 0.0.0&quot;)
+}
+vars.put(&quot;datecreate&quot;,&apos;1660711862138&apos;)
+def time3 =  &apos;17.08.2022&apos;
+def folger_id = &quot;&quot;
+def template_page = &quot;&quot;
+def slack_thread=&quot;null&quot;
+def slack_channel=&quot;&quot;
+def flag = false
+
+object.projects.each{
+	if (it.containsKey(vars.get(&quot;project_name&quot;))){
+		log.info(it.toString())
+		log.info(it.get(vars.get(&quot;project_name&quot;)).toString())
+		vars.put(&quot;default_as_rt&quot;,it.get(vars.get(&quot;project_name&quot;)).get(&quot;default_as_rt&quot;).toString())
+		it.get(vars.get(&quot;project_name&quot;)).test_name.each{
+			log.info(it.toString())
+			if (it.containsKey(vars.get(&quot;test_name&quot;))){
+				vars.put(&quot;folder_id&quot;,it.get(vars.get(&quot;test_name&quot;)).get(&quot;folder_id&quot;).toString())
+				vars.put(&quot;template_page&quot;,it.get(vars.get(&quot;test_name&quot;)).get(&quot;template_page&quot;).toString())
+				vars.put(&quot;slack_channel&quot;,it.get(vars.get(&quot;test_name&quot;)).get(&quot;slack_channel&quot;).toString())
+				vars.put(&quot;slack_thread&quot;,it.get(vars.get(&quot;test_name&quot;)).get(&quot;slack_thread&quot;).toString())	
+				flag= true 
+				log.info(&quot;YOUR PROJECT IS - &quot; + vars.get(&quot;project_name&quot;))
+			}
+		}
+	}
+}
+
+if (!flag) {
+	log.info(&quot;PROJECT DON&apos;T MATCH ANY CONFIG, PLEASE CHECK THE JSON&quot;)
+	ctx.getThread().stop()	
+
+}
+log.info(&quot;Parameters: project_name = &quot; + vars.get(&quot;project_name&quot;) + &quot; version = &quot; + vars.get(&quot;version&quot;) + &quot; folder_id = &quot; + vars.get(&quot;folder_id&quot;) + &quot; template_page = &quot; + vars.get(&quot;template_page&quot;) + &quot; slack_channel = &quot; + vars.get(&quot;slack_channel&quot;) + &quot; slack_thread = &quot; + vars.get(&quot;slack_thread&quot;) +  &quot; test_name = &quot; + vars.get(&quot;test_name&quot;) + &quot; namespace = &quot; + props.get(&quot;namespace&quot;)+  &quot; default_as_rt = &quot; + vars.get(&quot;default_as_rt&quot;))</samplerData>
+</sample>
+<sample t="8" it="0" lt="0" ct="0" ts="1660711862519" s="true" lb="_VersionAndTitleGenerate" rc="200" rm="OK" tn="Test Finishing 1-1" dt="text" de="" by="0" sby="0" sc="1" ec="0" ng="1" na="1" hn="DESKTOP-HVGSLE1">
+  <responseHeader class="java.lang.String"></responseHeader>
+  <requestHeader class="java.lang.String"></requestHeader>
+  <responseData class="java.lang.String"></responseData>
+  <responseFile class="java.lang.String"></responseFile>
+  <samplerData class="java.lang.String">def vers = &apos;&apos;&apos;0.0.0&apos;&apos;&apos;.replaceAll(&quot;\r\n|\r|\n&quot;,&quot;&quot;).replaceAll(&quot;&quot;,&quot;&quot;).replaceAll(&quot;\&quot;&quot;,&quot;&quot;)
+vars.put(&quot;version_out&quot;,vers)
+def title = &quot;v&quot;+vers+&quot;_d&quot; + &apos;17-08-22_06:51&apos;
+vars.put(&quot;title&quot;,title)
+log.info(&quot;Version And Title is OK: &quot; + title)
+</samplerData>
+</sample>
+<httpSample t="0" it="0" lt="0" ct="0" ts="1660711862528" s="false" lb="_CreateDraftReport" rc="Non HTTP response code: java.net.URISyntaxException" rm="Non HTTP response message: Expected closing bracket for IPv6 address at index 15: https://[https://aws-tools.standardbank.co.za/confluence]/wiki/rest/api/content/" tn="Test Finishing 1-1" dt="text" de="" by="1377" sby="0" sc="1" ec="1" ng="1" na="1" hn="DESKTOP-HVGSLE1">
+  <responseHeader class="java.lang.String"></responseHeader>
+  <requestHeader class="java.lang.String"></requestHeader>
+  <responseData class="java.lang.String">java.net.URISyntaxException: Expected closing bracket for IPv6 address at index 15: https://[https://aws-tools.standardbank.co.za/confluence]/wiki/rest/api/content/&#xd;
+	at java.base/java.net.URI$Parser.fail(URI.java:2915)&#xd;
+	at java.base/java.net.URI$Parser.failExpecting(URI.java:2921)&#xd;
+	at java.base/java.net.URI$Parser.parseServer(URI.java:3294)&#xd;
+	at java.base/java.net.URI$Parser.parseAuthority(URI.java:3218)&#xd;
+	at java.base/java.net.URI$Parser.parseHierarchical(URI.java:3160)&#xd;
+	at java.base/java.net.URI$Parser.parse(URI.java:3116)&#xd;
+	at java.base/java.net.URI.&lt;init&gt;(URI.java:600)&#xd;
+	at java.base/java.net.URL.toURI(URL.java:1018)&#xd;
+	at org.apache.jmeter.protocol.http.sampler.HTTPHC4Impl.sample(HTTPHC4Impl.java:620)&#xd;
+	at org.apache.jmeter.protocol.http.sampler.HTTPSamplerProxy.sample(HTTPSamplerProxy.java:66)&#xd;
+	at org.apache.jmeter.protocol.http.sampler.HTTPSamplerBase.sample(HTTPSamplerBase.java:1296)&#xd;
+	at org.apache.jmeter.protocol.http.sampler.HTTPSamplerBase.sample(HTTPSamplerBase.java:1285)&#xd;
+	at org.apache.jmeter.threads.JMeterThread.doSampling(JMeterThread.java:638)&#xd;
+	at org.apache.jmeter.threads.JMeterThread.executeSamplePackage(JMeterThread.java:558)&#xd;
+	at org.apache.jmeter.threads.JMeterThread.processSampler(JMeterThread.java:489)&#xd;
+	at org.apache.jmeter.threads.JMeterThread.run(JMeterThread.java:256)&#xd;
+	at java.base/java.lang.Thread.run(Thread.java:834)&#xd;
+</responseData>
+  <responseFile class="java.lang.String"></responseFile>
+  <cookies class="java.lang.String"></cookies>
+  <method class="java.lang.String">POST</method>
+  <queryString class="java.lang.String"></queryString>
+  <java.net.URL>https://[https://aws-tools.standardbank.co.za/confluence]/wiki/rest/api/content/</java.net.URL>
+</httpSample>
+
+<sample t="17" it="0" lt="0" ct="0" ts="1660711927791" s="true" lb="_DateAndVarSet" rc="200" rm="OK" tn="Test Finishing 1-1" dt="text" de="" by="3697" sby="0" sc="1" ec="0" ng="1" na="1" hn="DESKTOP-HVGSLE1">
+  <sample t="0" it="0" lt="0" ct="0" ts="1660711927808" s="true" lb="_DateAndVarSet-0" rc="200" rm="OK" tn="Test Finishing 1-1" dt="text" de="windows-1252" by="3697" sby="0" sc="1" ec="0" ng="1" na="1" hn="DESKTOP-HVGSLE1">
+    <responseHeader class="java.lang.String"></responseHeader>
+    <requestHeader class="java.lang.String"></requestHeader>
+    <responseData class="java.lang.String">SamplerProperties:
+TestElement.enabled=true
+TestElement.gui_class=org.apache.jmeter.testbeans.gui.TestBeanGUI
+TestElement.name=_DateAndVarSet
+TestElement.test_class=org.apache.jmeter.protocol.java.sampler.JSR223Sampler
+cacheKey=true
+filename=
+parameters=
+script=import groovy.json.JsonSlurper
+import org.apache.jmeter.services.FileServer;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+def jsonSlurper = new JsonSlurper()
+String file_path = FileServer.getFileServer().getBaseDir()+File.separator+&quot;..&quot;+File.separator+&quot;template&quot;+File.separator+&quot;finishing_config.json&quot;
+def fileContents = new File(file_path)
+def object = jsonSlurper.parseText(fileContents.getText(&apos;UTF-8&apos;))
+
+if (false) {
+ 	vars.put(&quot;cur_run&quot;,vars.get(&quot;cur_run_manual&quot;))
+} else {
+	vars.put(&quot;datetimeend&quot;,&apos;1660711927791&apos;)
+	vars.put(&quot;datetimestart&quot;,&apos;1660711927472&apos;)
+	vars.put(&quot;cur_run&quot;,&quot;17-08-22_06:52 0.0.0&quot;)
+}
+vars.put(&quot;datecreate&quot;,&apos;1660711927472&apos;)
+def time3 =  &apos;17.08.2022&apos;
+def folger_id = &quot;&quot;
+def template_page = &quot;&quot;
+def slack_thread=&quot;null&quot;
+def slack_channel=&quot;&quot;
+def flag = false
+
+object.projects.each{
+	if (it.containsKey(vars.get(&quot;project_name&quot;))){
+		log.info(it.toString())
+		log.info(it.get(vars.get(&quot;project_name&quot;)).toString())
+		vars.put(&quot;default_as_rt&quot;,it.get(vars.get(&quot;project_name&quot;)).get(&quot;default_as_rt&quot;).toString())
+		it.get(vars.get(&quot;project_name&quot;)).test_name.each{
+			log.info(it.toString())
+			if (it.containsKey(vars.get(&quot;test_name&quot;))){
+				vars.put(&quot;folder_id&quot;,it.get(vars.get(&quot;test_name&quot;)).get(&quot;folder_id&quot;).toString())
+				vars.put(&quot;template_page&quot;,it.get(vars.get(&quot;test_name&quot;)).get(&quot;template_page&quot;).toString())
+				vars.put(&quot;slack_channel&quot;,it.get(vars.get(&quot;test_name&quot;)).get(&quot;slack_channel&quot;).toString())
+				vars.put(&quot;slack_thread&quot;,it.get(vars.get(&quot;test_name&quot;)).get(&quot;slack_thread&quot;).toString())	
+				flag= true 
+				log.info(&quot;YOUR PROJECT IS - &quot; + vars.get(&quot;project_name&quot;))
+			}
+		}
+	}
+}
+
+if (!flag) {
+	log.info(&quot;PROJECT DON&apos;T MATCH ANY CONFIG, PLEASE CHECK THE JSON&quot;)
+	ctx.getThread().stop()	
+
+}
+log.info(&quot;Parameters: project_name = &quot; + vars.get(&quot;project_name&quot;) + &quot; version = &quot; + vars.get(&quot;version&quot;) + &quot; folder_id = &quot; + vars.get(&quot;folder_id&quot;) + &quot; template_page = &quot; + vars.get(&quot;template_page&quot;) + &quot; slack_channel = &quot; + vars.get(&quot;slack_channel&quot;) + &quot; slack_thread = &quot; + vars.get(&quot;slack_thread&quot;) +  &quot; test_name = &quot; + vars.get(&quot;test_name&quot;) + &quot; namespace = &quot; + props.get(&quot;namespace&quot;)+  &quot; default_as_rt = &quot; + vars.get(&quot;default_as_rt&quot;))
+scriptLanguage=groovy
+
+JMeterVariables:
+JMeterThread.last_sample_ok=true
+JMeterThread.pack=org.apache.jmeter.threads.SamplePackage@3cc7d2ed
+START.HMS=055230
+START.MS=1660708350109
+START.YMD=20220817
+TESTSTART.MS=1660711927472
+__jm__Test Finishing__idx=0
+__jmv_SAME_USER=true
+as_er=0
+as_rt=0
+as_time=0
+cur_run=17-08-22_06:52 0.0.0
+datecreate=1660711927472
+datetimeend=1660711927791
+datetimestart=1660711927472
+debug=false
+default_as_rt=200
+flux_token=FxO119l3-bajOCFF56y2ButEYMXpZ1ZtVb0S0v_MKlVybyIs6aBugJuRoJ_zod-leRBO4Wu_Z1WS2h0NKkX1gQ==
+folder_id=163854
+grafana_host=localhost
+grafana_token=eyJrIjoid0ZxaU9EZlpiY3ZiaWZ4TEt2dHR1Z1Y3M3NlQTJOWGciLCJuIjoia3l1cmtvdl9xYWxvYWQiLCJpZCI6MX0=
+influx_host=localhost
+influx_org=local
+influx_orgID=6bd8aa0fb314e146
+no_report=false
+project_name=Project1
+silent_mode=false
+slack_channel=C02EHMVN09Y
+slack_for_test=https://kirillyurkovqaload.slack.com/archives/C02EHMVN09Y/p1631708465000600
+slack_thread=1631708465.000600
+slack_token=xoxp-2479020116423-2486993364326-2519978774640-34bb435caea60745cec69df8fab543cf
+template_page=131187
+test_name=foodebug
+version=0.0.0
+wiki_host=https://aws-tools.standardbank.co.za/confluence
+wiki_space=BWS
+wiki_token=Mzk3NjMyODg1NTg4OqxKLGxjGYO1bgnF2nelvdkKXSIM
+
+</responseData>
+    <responseFile class="java.lang.String"></responseFile>
+    <samplerData class="java.lang.String">SamplerProperties
+JMeterVariables
+</samplerData>
+  </sample>
+  <responseHeader class="java.lang.String"></responseHeader>
+  <requestHeader class="java.lang.String"></requestHeader>
+  <responseData class="java.lang.String"></responseData>
+  <responseFile class="java.lang.String"></responseFile>
+  <samplerData class="java.lang.String">import groovy.json.JsonSlurper
+import org.apache.jmeter.services.FileServer;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+def jsonSlurper = new JsonSlurper()
+String file_path = FileServer.getFileServer().getBaseDir()+File.separator+&quot;..&quot;+File.separator+&quot;template&quot;+File.separator+&quot;finishing_config.json&quot;
+def fileContents = new File(file_path)
+def object = jsonSlurper.parseText(fileContents.getText(&apos;UTF-8&apos;))
+
+if (false) {
+ 	vars.put(&quot;cur_run&quot;,vars.get(&quot;cur_run_manual&quot;))
+} else {
+	vars.put(&quot;datetimeend&quot;,&apos;1660711927791&apos;)
+	vars.put(&quot;datetimestart&quot;,&apos;1660711927472&apos;)
+	vars.put(&quot;cur_run&quot;,&quot;17-08-22_06:52 0.0.0&quot;)
+}
+vars.put(&quot;datecreate&quot;,&apos;1660711927472&apos;)
+def time3 =  &apos;17.08.2022&apos;
+def folger_id = &quot;&quot;
+def template_page = &quot;&quot;
+def slack_thread=&quot;null&quot;
+def slack_channel=&quot;&quot;
+def flag = false
+
+object.projects.each{
+	if (it.containsKey(vars.get(&quot;project_name&quot;))){
+		log.info(it.toString())
+		log.info(it.get(vars.get(&quot;project_name&quot;)).toString())
+		vars.put(&quot;default_as_rt&quot;,it.get(vars.get(&quot;project_name&quot;)).get(&quot;default_as_rt&quot;).toString())
+		it.get(vars.get(&quot;project_name&quot;)).test_name.each{
+			log.info(it.toString())
+			if (it.containsKey(vars.get(&quot;test_name&quot;))){
+				vars.put(&quot;folder_id&quot;,it.get(vars.get(&quot;test_name&quot;)).get(&quot;folder_id&quot;).toString())
+				vars.put(&quot;template_page&quot;,it.get(vars.get(&quot;test_name&quot;)).get(&quot;template_page&quot;).toString())
+				vars.put(&quot;slack_channel&quot;,it.get(vars.get(&quot;test_name&quot;)).get(&quot;slack_channel&quot;).toString())
+				vars.put(&quot;slack_thread&quot;,it.get(vars.get(&quot;test_name&quot;)).get(&quot;slack_thread&quot;).toString())	
+				flag= true 
+				log.info(&quot;YOUR PROJECT IS - &quot; + vars.get(&quot;project_name&quot;))
+			}
+		}
+	}
+}
+
+if (!flag) {
+	log.info(&quot;PROJECT DON&apos;T MATCH ANY CONFIG, PLEASE CHECK THE JSON&quot;)
+	ctx.getThread().stop()	
+
+}
+log.info(&quot;Parameters: project_name = &quot; + vars.get(&quot;project_name&quot;) + &quot; version = &quot; + vars.get(&quot;version&quot;) + &quot; folder_id = &quot; + vars.get(&quot;folder_id&quot;) + &quot; template_page = &quot; + vars.get(&quot;template_page&quot;) + &quot; slack_channel = &quot; + vars.get(&quot;slack_channel&quot;) + &quot; slack_thread = &quot; + vars.get(&quot;slack_thread&quot;) +  &quot; test_name = &quot; + vars.get(&quot;test_name&quot;) + &quot; namespace = &quot; + props.get(&quot;namespace&quot;)+  &quot; default_as_rt = &quot; + vars.get(&quot;default_as_rt&quot;))</samplerData>
+</sample>
+<sample t="6" it="0" lt="0" ct="0" ts="1660711927809" s="true" lb="_VersionAndTitleGenerate" rc="200" rm="OK" tn="Test Finishing 1-1" dt="text" de="" by="1788" sby="0" sc="1" ec="0" ng="1" na="1" hn="DESKTOP-HVGSLE1">
+  <sample t="0" it="0" lt="0" ct="0" ts="1660711927815" s="true" lb="_VersionAndTitleGenerate-0" rc="200" rm="OK" tn="Test Finishing 1-1" dt="text" de="windows-1252" by="1788" sby="0" sc="1" ec="0" ng="1" na="1" hn="DESKTOP-HVGSLE1">
+    <responseHeader class="java.lang.String"></responseHeader>
+    <requestHeader class="java.lang.String"></requestHeader>
+    <responseData class="java.lang.String">SamplerProperties:
+TestElement.enabled=true
+TestElement.gui_class=org.apache.jmeter.testbeans.gui.TestBeanGUI
+TestElement.name=_VersionAndTitleGenerate
+TestElement.test_class=org.apache.jmeter.protocol.java.sampler.JSR223Sampler
+cacheKey=true
+filename=
+parameters=
+script=def vers = &apos;&apos;&apos;0.0.0&apos;&apos;&apos;.replaceAll(&quot;\r\n|\r|\n&quot;,&quot;&quot;).replaceAll(&quot;&quot;,&quot;&quot;).replaceAll(&quot;\&quot;&quot;,&quot;&quot;)
+vars.put(&quot;version_out&quot;,vers)
+def title = &quot;v&quot;+vers+&quot;_d&quot; + &apos;17-08-22_06:52&apos;
+vars.put(&quot;title&quot;,title)
+log.info(&quot;Version And Title is OK: &quot; + title)
+
+scriptLanguage=groovy
+
+JMeterVariables:
+JMeterThread.last_sample_ok=true
+JMeterThread.pack=org.apache.jmeter.threads.SamplePackage@5b053309
+START.HMS=055230
+START.MS=1660708350109
+START.YMD=20220817
+TESTSTART.MS=1660711927472
+__jm__Test Finishing__idx=0
+__jmv_SAME_USER=true
+as_er=0
+as_rt=0
+as_time=0
+cur_run=17-08-22_06:52 0.0.0
+datecreate=1660711927472
+datetimeend=1660711927791
+datetimestart=1660711927472
+debug=false
+default_as_rt=200
+flux_token=FxO119l3-bajOCFF56y2ButEYMXpZ1ZtVb0S0v_MKlVybyIs6aBugJuRoJ_zod-leRBO4Wu_Z1WS2h0NKkX1gQ==
+folder_id=163854
+grafana_host=localhost
+grafana_token=eyJrIjoid0ZxaU9EZlpiY3ZiaWZ4TEt2dHR1Z1Y3M3NlQTJOWGciLCJuIjoia3l1cmtvdl9xYWxvYWQiLCJpZCI6MX0=
+influx_host=localhost
+influx_org=local
+influx_orgID=6bd8aa0fb314e146
+no_report=false
+project_name=Project1
+silent_mode=false
+slack_channel=C02EHMVN09Y
+slack_for_test=https://kirillyurkovqaload.slack.com/archives/C02EHMVN09Y/p1631708465000600
+slack_thread=1631708465.000600
+slack_token=xoxp-2479020116423-2486993364326-2519978774640-34bb435caea60745cec69df8fab543cf
+template_page=131187
+test_name=foodebug
+title=v0.0.0_d17-08-22_06:52
+version=0.0.0
+version_out=0.0.0
+wiki_host=https://aws-tools.standardbank.co.za/confluence
+wiki_space=BWS
+wiki_token=Mzk3NjMyODg1NTg4OqxKLGxjGYO1bgnF2nelvdkKXSIM
+
+</responseData>
+    <responseFile class="java.lang.String"></responseFile>
+    <samplerData class="java.lang.String">SamplerProperties
+JMeterVariables
+</samplerData>
+  </sample>
+  <responseHeader class="java.lang.String"></responseHeader>
+  <requestHeader class="java.lang.String"></requestHeader>
+  <responseData class="java.lang.String"></responseData>
+  <responseFile class="java.lang.String"></responseFile>
+  <samplerData class="java.lang.String">def vers = &apos;&apos;&apos;0.0.0&apos;&apos;&apos;.replaceAll(&quot;\r\n|\r|\n&quot;,&quot;&quot;).replaceAll(&quot;&quot;,&quot;&quot;).replaceAll(&quot;\&quot;&quot;,&quot;&quot;)
+vars.put(&quot;version_out&quot;,vers)
+def title = &quot;v&quot;+vers+&quot;_d&quot; + &apos;17-08-22_06:52&apos;
+vars.put(&quot;title&quot;,title)
+log.info(&quot;Version And Title is OK: &quot; + title)
+</samplerData>
+</sample>
+<httpSample t="0" it="0" lt="0" ct="0" ts="1660711927816" s="false" lb="_CreateDraftReport" rc="Non HTTP response code: java.net.URISyntaxException" rm="Non HTTP response message: Expected closing bracket for IPv6 address at index 15: https://[https://aws-tools.standardbank.co.za/confluence]/wiki/rest/api/content/" tn="Test Finishing 1-1" dt="text" de="" by="3687" sby="0" sc="1" ec="1" ng="1" na="1" hn="DESKTOP-HVGSLE1">
+  <sample t="0" it="0" lt="0" ct="0" ts="1660711927816" s="true" lb="_CreateDraftReport-0" rc="200" rm="OK" tn="Test Finishing 1-1" dt="text" de="windows-1252" by="2310" sby="0" sc="1" ec="0" ng="1" na="1" hn="DESKTOP-HVGSLE1">
+    <responseHeader class="java.lang.String"></responseHeader>
+    <requestHeader class="java.lang.String"></requestHeader>
+    <responseData class="java.lang.String">SamplerProperties:
+HTTPSampler.DO_MULTIPART_POST=false
+HTTPSampler.auto_redirects=false
+HTTPSampler.connect_timeout=
+HTTPSampler.contentEncoding=
+HTTPSampler.domain=https://aws-tools.standardbank.co.za/confluence
+HTTPSampler.embedded_url_re=
+HTTPSampler.follow_redirects=true
+HTTPSampler.header_manager=org.apache.jmeter.protocol.http.control.HeaderManager@725bebfc
+HTTPSampler.implementation=HttpClient4
+HTTPSampler.method=POST
+HTTPSampler.path=wiki/rest/api/content/
+HTTPSampler.port=
+HTTPSampler.postBodyRaw=true
+HTTPSampler.protocol=HTTPS
+HTTPSampler.response_timeout=
+HTTPSampler.use_keepalive=true
+HTTPsampler.Arguments=={&quot;type&quot;:&quot;page&quot;,&quot;title&quot;:&quot;v0.0.0_d17-08-22_06:52&quot;, &quot;ancestors&quot;:[{&quot;id&quot;:${folger_id}}], &quot;space&quot;:{&quot;key&quot;:&quot;${space}&quot;},&quot;body&quot;:{&quot;storage&quot;:{&quot;value&quot;: &quot;&lt;p&gt;This is a new page&lt;/p&gt;&quot;,&quot;representation&quot;:&quot;storage&quot;}}}()
+TestElement.enabled=true
+TestElement.gui_class=org.apache.jmeter.protocol.http.control.gui.HttpTestSampleGui
+TestElement.name=_CreateDraftReport
+TestElement.test_class=org.apache.jmeter.protocol.http.sampler.HTTPSamplerProxy
+
+JMeterVariables:
+JMeterThread.last_sample_ok=true
+JMeterThread.pack=org.apache.jmeter.threads.SamplePackage@774067f
+START.HMS=055230
+START.MS=1660708350109
+START.YMD=20220817
+TESTSTART.MS=1660711927472
+__jm__Test Finishing__idx=0
+__jmv_SAME_USER=true
+as_er=0
+as_rt=0
+as_time=0
+cur_run=17-08-22_06:52 0.0.0
+datecreate=1660711927472
+datetimeend=1660711927791
+datetimestart=1660711927472
+debug=false
+default_as_rt=200
+flux_token=FxO119l3-bajOCFF56y2ButEYMXpZ1ZtVb0S0v_MKlVybyIs6aBugJuRoJ_zod-leRBO4Wu_Z1WS2h0NKkX1gQ==
+folder_id=163854
+grafana_host=localhost
+grafana_token=eyJrIjoid0ZxaU9EZlpiY3ZiaWZ4TEt2dHR1Z1Y3M3NlQTJOWGciLCJuIjoia3l1cmtvdl9xYWxvYWQiLCJpZCI6MX0=
+influx_host=localhost
+influx_org=local
+influx_orgID=6bd8aa0fb314e146
+no_report=false
+project_name=Project1
+silent_mode=false
+slack_channel=C02EHMVN09Y
+slack_for_test=https://kirillyurkovqaload.slack.com/archives/C02EHMVN09Y/p1631708465000600
+slack_thread=1631708465.000600
+slack_token=xoxp-2479020116423-2486993364326-2519978774640-34bb435caea60745cec69df8fab543cf
+template_page=131187
+test_name=foodebug
+title=v0.0.0_d17-08-22_06:52
+version=0.0.0
+version_out=0.0.0
+wiki_host=https://aws-tools.standardbank.co.za/confluence
+wiki_space=BWS
+wiki_token=Mzk3NjMyODg1NTg4OqxKLGxjGYO1bgnF2nelvdkKXSIM
+
+</responseData>
+    <responseFile class="java.lang.String"></responseFile>
+    <samplerData class="java.lang.String">SamplerProperties
+JMeterVariables
+</samplerData>
+  </sample>
+  <responseHeader class="java.lang.String"></responseHeader>
+  <requestHeader class="java.lang.String"></requestHeader>
+  <responseData class="java.lang.String">java.net.URISyntaxException: Expected closing bracket for IPv6 address at index 15: https://[https://aws-tools.standardbank.co.za/confluence]/wiki/rest/api/content/&#xd;
+	at java.base/java.net.URI$Parser.fail(URI.java:2915)&#xd;
+	at java.base/java.net.URI$Parser.failExpecting(URI.java:2921)&#xd;
+	at java.base/java.net.URI$Parser.parseServer(URI.java:3294)&#xd;
+	at java.base/java.net.URI$Parser.parseAuthority(URI.java:3218)&#xd;
+	at java.base/java.net.URI$Parser.parseHierarchical(URI.java:3160)&#xd;
+	at java.base/java.net.URI$Parser.parse(URI.java:3116)&#xd;
+	at java.base/java.net.URI.&lt;init&gt;(URI.java:600)&#xd;
+	at java.base/java.net.URL.toURI(URL.java:1018)&#xd;
+	at org.apache.jmeter.protocol.http.sampler.HTTPHC4Impl.sample(HTTPHC4Impl.java:620)&#xd;
+	at org.apache.jmeter.protocol.http.sampler.HTTPSamplerProxy.sample(HTTPSamplerProxy.java:66)&#xd;
+	at org.apache.jmeter.protocol.http.sampler.HTTPSamplerBase.sample(HTTPSamplerBase.java:1296)&#xd;
+	at org.apache.jmeter.protocol.http.sampler.HTTPSamplerBase.sample(HTTPSamplerBase.java:1285)&#xd;
+	at org.apache.jmeter.threads.JMeterThread.doSampling(JMeterThread.java:638)&#xd;
+	at org.apache.jmeter.threads.JMeterThread.executeSamplePackage(JMeterThread.java:558)&#xd;
+	at org.apache.jmeter.threads.JMeterThread.processSampler(JMeterThread.java:489)&#xd;
+	at org.apache.jmeter.threads.JMeterThread.run(JMeterThread.java:256)&#xd;
+	at java.base/java.lang.Thread.run(Thread.java:834)&#xd;
+</responseData>
+  <responseFile class="java.lang.String"></responseFile>
+  <cookies class="java.lang.String"></cookies>
+  <method class="java.lang.String">POST</method>
+  <queryString class="java.lang.String"></queryString>
+  <java.net.URL>https://[https://aws-tools.standardbank.co.za/confluence]/wiki/rest/api/content/</java.net.URL>
+</httpSample>
+
+<sample t="40" it="0" lt="0" ct="0" ts="1660712949889" s="true" lb="_DateAndVarSet" rc="200" rm="OK" tn="Test Finishing 1-1" dt="text" de="" by="3697" sby="0" sc="1" ec="0" ng="1" na="1" hn="DESKTOP-HVGSLE1">
+  <sample t="1" it="0" lt="0" ct="0" ts="1660712949928" s="true" lb="_DateAndVarSet-0" rc="200" rm="OK" tn="Test Finishing 1-1" dt="text" de="windows-1252" by="3697" sby="0" sc="1" ec="0" ng="1" na="1" hn="DESKTOP-HVGSLE1">
+    <responseHeader class="java.lang.String"></responseHeader>
+    <requestHeader class="java.lang.String"></requestHeader>
+    <responseData class="java.lang.String">SamplerProperties:
+TestElement.enabled=true
+TestElement.gui_class=org.apache.jmeter.testbeans.gui.TestBeanGUI
+TestElement.name=_DateAndVarSet
+TestElement.test_class=org.apache.jmeter.protocol.java.sampler.JSR223Sampler
+cacheKey=true
+filename=
+parameters=
+script=import groovy.json.JsonSlurper
+import org.apache.jmeter.services.FileServer;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+def jsonSlurper = new JsonSlurper()
+String file_path = FileServer.getFileServer().getBaseDir()+File.separator+&quot;..&quot;+File.separator+&quot;template&quot;+File.separator+&quot;finishing_config.json&quot;
+def fileContents = new File(file_path)
+def object = jsonSlurper.parseText(fileContents.getText(&apos;UTF-8&apos;))
+
+if (false) {
+ 	vars.put(&quot;cur_run&quot;,vars.get(&quot;cur_run_manual&quot;))
+} else {
+	vars.put(&quot;datetimeend&quot;,&apos;1660712949888&apos;)
+	vars.put(&quot;datetimestart&quot;,&apos;1660712948639&apos;)
+	vars.put(&quot;cur_run&quot;,&quot;17-08-22_07:09 0.0.0&quot;)
+}
+vars.put(&quot;datecreate&quot;,&apos;1660712948639&apos;)
+def time3 =  &apos;17.08.2022&apos;
+def folger_id = &quot;&quot;
+def template_page = &quot;&quot;
+def slack_thread=&quot;null&quot;
+def slack_channel=&quot;&quot;
+def flag = false
+
+object.projects.each{
+	if (it.containsKey(vars.get(&quot;project_name&quot;))){
+		log.info(it.toString())
+		log.info(it.get(vars.get(&quot;project_name&quot;)).toString())
+		vars.put(&quot;default_as_rt&quot;,it.get(vars.get(&quot;project_name&quot;)).get(&quot;default_as_rt&quot;).toString())
+		it.get(vars.get(&quot;project_name&quot;)).test_name.each{
+			log.info(it.toString())
+			if (it.containsKey(vars.get(&quot;test_name&quot;))){
+				vars.put(&quot;folder_id&quot;,it.get(vars.get(&quot;test_name&quot;)).get(&quot;folder_id&quot;).toString())
+				vars.put(&quot;template_page&quot;,it.get(vars.get(&quot;test_name&quot;)).get(&quot;template_page&quot;).toString())
+				vars.put(&quot;slack_channel&quot;,it.get(vars.get(&quot;test_name&quot;)).get(&quot;slack_channel&quot;).toString())
+				vars.put(&quot;slack_thread&quot;,it.get(vars.get(&quot;test_name&quot;)).get(&quot;slack_thread&quot;).toString())	
+				flag= true 
+				log.info(&quot;YOUR PROJECT IS - &quot; + vars.get(&quot;project_name&quot;))
+			}
+		}
+	}
+}
+
+if (!flag) {
+	log.info(&quot;PROJECT DON&apos;T MATCH ANY CONFIG, PLEASE CHECK THE JSON&quot;)
+	ctx.getThread().stop()	
+
+}
+log.info(&quot;Parameters: project_name = &quot; + vars.get(&quot;project_name&quot;) + &quot; version = &quot; + vars.get(&quot;version&quot;) + &quot; folder_id = &quot; + vars.get(&quot;folder_id&quot;) + &quot; template_page = &quot; + vars.get(&quot;template_page&quot;) + &quot; slack_channel = &quot; + vars.get(&quot;slack_channel&quot;) + &quot; slack_thread = &quot; + vars.get(&quot;slack_thread&quot;) +  &quot; test_name = &quot; + vars.get(&quot;test_name&quot;) + &quot; namespace = &quot; + props.get(&quot;namespace&quot;)+  &quot; default_as_rt = &quot; + vars.get(&quot;default_as_rt&quot;))
+scriptLanguage=groovy
+
+JMeterVariables:
+JMeterThread.last_sample_ok=true
+JMeterThread.pack=org.apache.jmeter.threads.SamplePackage@28386344
+START.HMS=055230
+START.MS=1660708350109
+START.YMD=20220817
+TESTSTART.MS=1660712948639
+__jm__Test Finishing__idx=0
+__jmv_SAME_USER=true
+as_er=0
+as_rt=0
+as_time=0
+cur_run=17-08-22_07:09 0.0.0
+datecreate=1660712948639
+datetimeend=1660712949888
+datetimestart=1660712948639
+debug=false
+default_as_rt=200
+flux_token=FxO119l3-bajOCFF56y2ButEYMXpZ1ZtVb0S0v_MKlVybyIs6aBugJuRoJ_zod-leRBO4Wu_Z1WS2h0NKkX1gQ==
+folder_id=163854
+grafana_host=localhost
+grafana_token=eyJrIjoid0ZxaU9EZlpiY3ZiaWZ4TEt2dHR1Z1Y3M3NlQTJOWGciLCJuIjoia3l1cmtvdl9xYWxvYWQiLCJpZCI6MX0=
+influx_host=localhost
+influx_org=local
+influx_orgID=6bd8aa0fb314e146
+no_report=false
+project_name=Project1
+silent_mode=false
+slack_channel=C02EHMVN09Y
+slack_for_test=https://kirillyurkovqaload.slack.com/archives/C02EHMVN09Y/p1631708465000600
+slack_thread=1631708465.000600
+slack_token=xoxp-2479020116423-2486993364326-2519978774640-34bb435caea60745cec69df8fab543cf
+template_page=131187
+test_name=foodebug
+version=0.0.0
+wiki_host=https://aws-tools.standardbank.co.za/confluence
+wiki_space=BWS
+wiki_token=Mzk3NjMyODg1NTg4OqxKLGxjGYO1bgnF2nelvdkKXSIM
+
+</responseData>
+    <responseFile class="java.lang.String"></responseFile>
+    <samplerData class="java.lang.String">SamplerProperties
+JMeterVariables
+</samplerData>
+  </sample>
+  <responseHeader class="java.lang.String"></responseHeader>
+  <requestHeader class="java.lang.String"></requestHeader>
+  <responseData class="java.lang.String"></responseData>
+  <responseFile class="java.lang.String"></responseFile>
+  <samplerData class="java.lang.String">import groovy.json.JsonSlurper
+import org.apache.jmeter.services.FileServer;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+def jsonSlurper = new JsonSlurper()
+String file_path = FileServer.getFileServer().getBaseDir()+File.separator+&quot;..&quot;+File.separator+&quot;template&quot;+File.separator+&quot;finishing_config.json&quot;
+def fileContents = new File(file_path)
+def object = jsonSlurper.parseText(fileContents.getText(&apos;UTF-8&apos;))
+
+if (false) {
+ 	vars.put(&quot;cur_run&quot;,vars.get(&quot;cur_run_manual&quot;))
+} else {
+	vars.put(&quot;datetimeend&quot;,&apos;1660712949888&apos;)
+	vars.put(&quot;datetimestart&quot;,&apos;1660712948639&apos;)
+	vars.put(&quot;cur_run&quot;,&quot;17-08-22_07:09 0.0.0&quot;)
+}
+vars.put(&quot;datecreate&quot;,&apos;1660712948639&apos;)
+def time3 =  &apos;17.08.2022&apos;
+def folger_id = &quot;&quot;
+def template_page = &quot;&quot;
+def slack_thread=&quot;null&quot;
+def slack_channel=&quot;&quot;
+def flag = false
+
+object.projects.each{
+	if (it.containsKey(vars.get(&quot;project_name&quot;))){
+		log.info(it.toString())
+		log.info(it.get(vars.get(&quot;project_name&quot;)).toString())
+		vars.put(&quot;default_as_rt&quot;,it.get(vars.get(&quot;project_name&quot;)).get(&quot;default_as_rt&quot;).toString())
+		it.get(vars.get(&quot;project_name&quot;)).test_name.each{
+			log.info(it.toString())
+			if (it.containsKey(vars.get(&quot;test_name&quot;))){
+				vars.put(&quot;folder_id&quot;,it.get(vars.get(&quot;test_name&quot;)).get(&quot;folder_id&quot;).toString())
+				vars.put(&quot;template_page&quot;,it.get(vars.get(&quot;test_name&quot;)).get(&quot;template_page&quot;).toString())
+				vars.put(&quot;slack_channel&quot;,it.get(vars.get(&quot;test_name&quot;)).get(&quot;slack_channel&quot;).toString())
+				vars.put(&quot;slack_thread&quot;,it.get(vars.get(&quot;test_name&quot;)).get(&quot;slack_thread&quot;).toString())	
+				flag= true 
+				log.info(&quot;YOUR PROJECT IS - &quot; + vars.get(&quot;project_name&quot;))
+			}
+		}
+	}
+}
+
+if (!flag) {
+	log.info(&quot;PROJECT DON&apos;T MATCH ANY CONFIG, PLEASE CHECK THE JSON&quot;)
+	ctx.getThread().stop()	
+
+}
+log.info(&quot;Parameters: project_name = &quot; + vars.get(&quot;project_name&quot;) + &quot; version = &quot; + vars.get(&quot;version&quot;) + &quot; folder_id = &quot; + vars.get(&quot;folder_id&quot;) + &quot; template_page = &quot; + vars.get(&quot;template_page&quot;) + &quot; slack_channel = &quot; + vars.get(&quot;slack_channel&quot;) + &quot; slack_thread = &quot; + vars.get(&quot;slack_thread&quot;) +  &quot; test_name = &quot; + vars.get(&quot;test_name&quot;) + &quot; namespace = &quot; + props.get(&quot;namespace&quot;)+  &quot; default_as_rt = &quot; + vars.get(&quot;default_as_rt&quot;))</samplerData>
+</sample>
+<sample t="7" it="0" lt="0" ct="0" ts="1660712949929" s="true" lb="_VersionAndTitleGenerate" rc="200" rm="OK" tn="Test Finishing 1-1" dt="text" de="" by="1788" sby="0" sc="1" ec="0" ng="1" na="1" hn="DESKTOP-HVGSLE1">
+  <sample t="1" it="0" lt="0" ct="0" ts="1660712949935" s="true" lb="_VersionAndTitleGenerate-0" rc="200" rm="OK" tn="Test Finishing 1-1" dt="text" de="windows-1252" by="1788" sby="0" sc="1" ec="0" ng="1" na="1" hn="DESKTOP-HVGSLE1">
+    <responseHeader class="java.lang.String"></responseHeader>
+    <requestHeader class="java.lang.String"></requestHeader>
+    <responseData class="java.lang.String">SamplerProperties:
+TestElement.enabled=true
+TestElement.gui_class=org.apache.jmeter.testbeans.gui.TestBeanGUI
+TestElement.name=_VersionAndTitleGenerate
+TestElement.test_class=org.apache.jmeter.protocol.java.sampler.JSR223Sampler
+cacheKey=true
+filename=
+parameters=
+script=def vers = &apos;&apos;&apos;0.0.0&apos;&apos;&apos;.replaceAll(&quot;\r\n|\r|\n&quot;,&quot;&quot;).replaceAll(&quot;&quot;,&quot;&quot;).replaceAll(&quot;\&quot;&quot;,&quot;&quot;)
+vars.put(&quot;version_out&quot;,vers)
+def title = &quot;v&quot;+vers+&quot;_d&quot; + &apos;17-08-22_07:09&apos;
+vars.put(&quot;title&quot;,title)
+log.info(&quot;Version And Title is OK: &quot; + title)
+
+scriptLanguage=groovy
+
+JMeterVariables:
+JMeterThread.last_sample_ok=true
+JMeterThread.pack=org.apache.jmeter.threads.SamplePackage@1ebc8bed
+START.HMS=055230
+START.MS=1660708350109
+START.YMD=20220817
+TESTSTART.MS=1660712948639
+__jm__Test Finishing__idx=0
+__jmv_SAME_USER=true
+as_er=0
+as_rt=0
+as_time=0
+cur_run=17-08-22_07:09 0.0.0
+datecreate=1660712948639
+datetimeend=1660712949888
+datetimestart=1660712948639
+debug=false
+default_as_rt=200
+flux_token=FxO119l3-bajOCFF56y2ButEYMXpZ1ZtVb0S0v_MKlVybyIs6aBugJuRoJ_zod-leRBO4Wu_Z1WS2h0NKkX1gQ==
+folder_id=163854
+grafana_host=localhost
+grafana_token=eyJrIjoid0ZxaU9EZlpiY3ZiaWZ4TEt2dHR1Z1Y3M3NlQTJOWGciLCJuIjoia3l1cmtvdl9xYWxvYWQiLCJpZCI6MX0=
+influx_host=localhost
+influx_org=local
+influx_orgID=6bd8aa0fb314e146
+no_report=false
+project_name=Project1
+silent_mode=false
+slack_channel=C02EHMVN09Y
+slack_for_test=https://kirillyurkovqaload.slack.com/archives/C02EHMVN09Y/p1631708465000600
+slack_thread=1631708465.000600
+slack_token=xoxp-2479020116423-2486993364326-2519978774640-34bb435caea60745cec69df8fab543cf
+template_page=131187
+test_name=foodebug
+title=v0.0.0_d17-08-22_07:09
+version=0.0.0
+version_out=0.0.0
+wiki_host=https://aws-tools.standardbank.co.za/confluence
+wiki_space=BWS
+wiki_token=Mzk3NjMyODg1NTg4OqxKLGxjGYO1bgnF2nelvdkKXSIM
+
+</responseData>
+    <responseFile class="java.lang.String"></responseFile>
+    <samplerData class="java.lang.String">SamplerProperties
+JMeterVariables
+</samplerData>
+  </sample>
+  <responseHeader class="java.lang.String"></responseHeader>
+  <requestHeader class="java.lang.String"></requestHeader>
+  <responseData class="java.lang.String"></responseData>
+  <responseFile class="java.lang.String"></responseFile>
+  <samplerData class="java.lang.String">def vers = &apos;&apos;&apos;0.0.0&apos;&apos;&apos;.replaceAll(&quot;\r\n|\r|\n&quot;,&quot;&quot;).replaceAll(&quot;&quot;,&quot;&quot;).replaceAll(&quot;\&quot;&quot;,&quot;&quot;)
+vars.put(&quot;version_out&quot;,vers)
+def title = &quot;v&quot;+vers+&quot;_d&quot; + &apos;17-08-22_07:09&apos;
+vars.put(&quot;title&quot;,title)
+log.info(&quot;Version And Title is OK: &quot; + title)
+</samplerData>
+</sample>
+<httpSample t="1" it="0" lt="0" ct="0" ts="1660712949936" s="false" lb="_CreateDraftReport" rc="Non HTTP response code: java.net.URISyntaxException" rm="Non HTTP response message: Expected closing bracket for IPv6 address at index 15: https://[https://aws-tools.standardbank.co.za/confluence]/wiki/rest/api/content/" tn="Test Finishing 1-1" dt="text" de="" by="3688" sby="0" sc="1" ec="1" ng="1" na="1" hn="DESKTOP-HVGSLE1">
+  <sample t="0" it="0" lt="0" ct="0" ts="1660712949937" s="true" lb="_CreateDraftReport-0" rc="200" rm="OK" tn="Test Finishing 1-1" dt="text" de="windows-1252" by="2311" sby="0" sc="1" ec="0" ng="1" na="1" hn="DESKTOP-HVGSLE1">
+    <responseHeader class="java.lang.String"></responseHeader>
+    <requestHeader class="java.lang.String"></requestHeader>
+    <responseData class="java.lang.String">SamplerProperties:
+HTTPSampler.DO_MULTIPART_POST=false
+HTTPSampler.auto_redirects=false
+HTTPSampler.connect_timeout=
+HTTPSampler.contentEncoding=
+HTTPSampler.domain=https://aws-tools.standardbank.co.za/confluence
+HTTPSampler.embedded_url_re=
+HTTPSampler.follow_redirects=true
+HTTPSampler.header_manager=org.apache.jmeter.protocol.http.control.HeaderManager@4635e438
+HTTPSampler.implementation=HttpClient4
+HTTPSampler.method=POST
+HTTPSampler.path=wiki/rest/api/content/
+HTTPSampler.port=
+HTTPSampler.postBodyRaw=true
+HTTPSampler.protocol=HTTPS
+HTTPSampler.response_timeout=
+HTTPSampler.use_keepalive=true
+HTTPsampler.Arguments=={&quot;type&quot;:&quot;page&quot;,&quot;title&quot;:&quot;v0.0.0_d17-08-22_07:09&quot;, &quot;ancestors&quot;:[{&quot;id&quot;:${folger_id}}], &quot;space&quot;:{&quot;key&quot;:&quot;${space}&quot;},&quot;body&quot;:{&quot;storage&quot;:{&quot;value&quot;: &quot;&lt;p&gt;This is a new page&lt;/p&gt;&quot;,&quot;representation&quot;:&quot;storage&quot;}}}()
+TestElement.enabled=true
+TestElement.gui_class=org.apache.jmeter.protocol.http.control.gui.HttpTestSampleGui
+TestElement.name=_CreateDraftReport
+TestElement.test_class=org.apache.jmeter.protocol.http.sampler.HTTPSamplerProxy
+
+JMeterVariables:
+JMeterThread.last_sample_ok=true
+JMeterThread.pack=org.apache.jmeter.threads.SamplePackage@18dee3c8
+START.HMS=055230
+START.MS=1660708350109
+START.YMD=20220817
+TESTSTART.MS=1660712948639
+__jm__Test Finishing__idx=0
+__jmv_SAME_USER=true
+as_er=0
+as_rt=0
+as_time=0
+cur_run=17-08-22_07:09 0.0.0
+datecreate=1660712948639
+datetimeend=1660712949888
+datetimestart=1660712948639
+debug=false
+default_as_rt=200
+flux_token=FxO119l3-bajOCFF56y2ButEYMXpZ1ZtVb0S0v_MKlVybyIs6aBugJuRoJ_zod-leRBO4Wu_Z1WS2h0NKkX1gQ==
+folder_id=163854
+grafana_host=localhost
+grafana_token=eyJrIjoid0ZxaU9EZlpiY3ZiaWZ4TEt2dHR1Z1Y3M3NlQTJOWGciLCJuIjoia3l1cmtvdl9xYWxvYWQiLCJpZCI6MX0=
+influx_host=localhost
+influx_org=local
+influx_orgID=6bd8aa0fb314e146
+no_report=false
+project_name=Project1
+silent_mode=false
+slack_channel=C02EHMVN09Y
+slack_for_test=https://kirillyurkovqaload.slack.com/archives/C02EHMVN09Y/p1631708465000600
+slack_thread=1631708465.000600
+slack_token=xoxp-2479020116423-2486993364326-2519978774640-34bb435caea60745cec69df8fab543cf
+template_page=131187
+test_name=foodebug
+title=v0.0.0_d17-08-22_07:09
+version=0.0.0
+version_out=0.0.0
+wiki_host=https://aws-tools.standardbank.co.za/confluence
+wiki_space=BWS
+wiki_token=Mzk3NjMyODg1NTg4OqxKLGxjGYO1bgnF2nelvdkKXSIM
+
+</responseData>
+    <responseFile class="java.lang.String"></responseFile>
+    <samplerData class="java.lang.String">SamplerProperties
+JMeterVariables
+</samplerData>
+  </sample>
+  <responseHeader class="java.lang.String"></responseHeader>
+  <requestHeader class="java.lang.String"></requestHeader>
+  <responseData class="java.lang.String">java.net.URISyntaxException: Expected closing bracket for IPv6 address at index 15: https://[https://aws-tools.standardbank.co.za/confluence]/wiki/rest/api/content/&#xd;
+	at java.base/java.net.URI$Parser.fail(URI.java:2915)&#xd;
+	at java.base/java.net.URI$Parser.failExpecting(URI.java:2921)&#xd;
+	at java.base/java.net.URI$Parser.parseServer(URI.java:3294)&#xd;
+	at java.base/java.net.URI$Parser.parseAuthority(URI.java:3218)&#xd;
+	at java.base/java.net.URI$Parser.parseHierarchical(URI.java:3160)&#xd;
+	at java.base/java.net.URI$Parser.parse(URI.java:3116)&#xd;
+	at java.base/java.net.URI.&lt;init&gt;(URI.java:600)&#xd;
+	at java.base/java.net.URL.toURI(URL.java:1018)&#xd;
+	at org.apache.jmeter.protocol.http.sampler.HTTPHC4Impl.sample(HTTPHC4Impl.java:620)&#xd;
+	at org.apache.jmeter.protocol.http.sampler.HTTPSamplerProxy.sample(HTTPSamplerProxy.java:66)&#xd;
+	at org.apache.jmeter.protocol.http.sampler.HTTPSamplerBase.sample(HTTPSamplerBase.java:1296)&#xd;
+	at org.apache.jmeter.protocol.http.sampler.HTTPSamplerBase.sample(HTTPSamplerBase.java:1285)&#xd;
+	at org.apache.jmeter.threads.JMeterThread.doSampling(JMeterThread.java:638)&#xd;
+	at org.apache.jmeter.threads.JMeterThread.executeSamplePackage(JMeterThread.java:558)&#xd;
+	at org.apache.jmeter.threads.JMeterThread.processSampler(JMeterThread.java:489)&#xd;
+	at org.apache.jmeter.threads.JMeterThread.run(JMeterThread.java:256)&#xd;
+	at java.base/java.lang.Thread.run(Thread.java:834)&#xd;
+</responseData>
+  <responseFile class="java.lang.String"></responseFile>
+  <cookies class="java.lang.String"></cookies>
+  <method class="java.lang.String">POST</method>
+  <queryString class="java.lang.String"></queryString>
+  <java.net.URL>https://[https://aws-tools.standardbank.co.za/confluence]/wiki/rest/api/content/</java.net.URL>
+</httpSample>
+
+</testResults>

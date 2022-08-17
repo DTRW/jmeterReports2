@@ -332,7 +332,7 @@ log.info(&quot;Version And Title is OK: &quot; + title)
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;type&quot;:&quot;page&quot;,&quot;title&quot;:&quot;${title}&quot;, &quot;ancestors&quot;:[{&quot;id&quot;:${folder_id}}], &quot;space&quot;:{&quot;key&quot;:&quot;${wiki_space}&quot;},&quot;body&quot;:{&quot;storage&quot;:{&quot;value&quot;: &quot;&lt;p&gt;This is a new page&lt;/p&gt;&quot;,&quot;representation&quot;:&quot;storage&quot;}}}</stringProp>
+                  <stringProp name="Argument.value">{&quot;type&quot;:&quot;page&quot;,&quot;title&quot;:&quot;${title}&quot;, &quot;ancestors&quot;:[{&quot;id&quot;:${folger_id}}], &quot;space&quot;:{&quot;key&quot;:&quot;${space}&quot;},&quot;body&quot;:{&quot;storage&quot;:{&quot;value&quot;: &quot;&lt;p&gt;This is a new page&lt;/p&gt;&quot;,&quot;representation&quot;:&quot;storage&quot;}}}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -353,7 +353,7 @@ log.info(&quot;Version And Title is OK: &quot; + title)
             <stringProp name="HTTPSampler.response_timeout"></stringProp>
           </HTTPSamplerProxy>
           <hashTree>
-            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="false">
               <collectionProp name="HeaderManager.headers">
                 <elementProp name="" elementType="Header">
                   <stringProp name="Header.name">Authorization</stringProp>
@@ -364,6 +364,20 @@ log.info(&quot;Version And Title is OK: &quot; + title)
                   <stringProp name="Header.value">application/json</stringProp>
                 </elementProp>
               </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="Authorization" elementType="Header">
+                  <stringProp name="Header.name">Authorization</stringProp>
+                  <stringProp name="Header.value">Bearer Mzk3NjMyODg1NTg4OqxKLGxjGYO1bgnF2nelvdkKXSIM</stringProp>
+                </elementProp>
+                <elementProp name="Content-Type" elementType="Header">
+                  <stringProp name="Header.name">Content-Type</stringProp>
+                  <stringProp name="Header.value">application/json</stringProp>
+                </elementProp>
+              </collectionProp>
+              <stringProp name="TestPlan.comments">Created from cURL on 2020-02-02T16:45:33.763</stringProp>
             </HeaderManager>
             <hashTree/>
             <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="REE &gt;&gt; id" enabled="true">
@@ -418,9 +432,19 @@ log.info(&quot;Version And Title is OK: &quot; + title)
                 </elementProp>
                 <elementProp name="Authorization" elementType="Header">
                   <stringProp name="Header.name">Authorization</stringProp>
-                  <stringProp name="Header.value">Basic ${wiki_token}</stringProp>
+                  <stringProp name="Header.value">Bearer Mzk3NjMyODg1NTg4OqxKLGxjGYO1bgnF2nelvdkKXSIM</stringProp>
                 </elementProp>
               </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP HeaderManager" enabled="false">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="Content-Type" elementType="Header">
+                  <stringProp name="Header.name">Content-Type</stringProp>
+                  <stringProp name="Header.value">application/json</stringProp>
+                </elementProp>
+              </collectionProp>
+              <stringProp name="TestPlan.comments">Created from cURL on 2020-02-02T16:45:33.763</stringProp>
             </HeaderManager>
             <hashTree/>
             <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="REE &gt;&gt; final_page" enabled="true">
@@ -3731,7 +3755,7 @@ log.info(&quot;jtl files getted&quot;)</stringProp>
               <stringProp name="HTTPSampler.port"></stringProp>
               <stringProp name="HTTPSampler.protocol">HTTPS</stringProp>
               <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-              <stringProp name="HTTPSampler.path">wiki/rest/api/content/${id}/child/attachment</stringProp>
+              <stringProp name="HTTPSampler.path">/rest/api/content/${id}/child/attachment</stringProp>
               <stringProp name="HTTPSampler.method">POST</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -3751,7 +3775,7 @@ log.info(&quot;jtl files getted&quot;)</stringProp>
                   </elementProp>
                   <elementProp name="Authorization" elementType="Header">
                     <stringProp name="Header.name">Authorization</stringProp>
-                    <stringProp name="Header.value">Basic ${wiki_token}</stringProp>
+                    <stringProp name="Header.value">Bearer Mzk3NjMyODg1NTg4OqxKLGxjGYO1bgnF2nelvdkKXSIM</stringProp>
                   </elementProp>
                 </collectionProp>
                 <stringProp name="TestPlan.comments">Created from cURL on 2020-02-02T16:45:33.763</stringProp>
@@ -3782,7 +3806,7 @@ log.info(&quot;jtl files getted&quot;)</stringProp>
               <stringProp name="HTTPSampler.port"></stringProp>
               <stringProp name="HTTPSampler.protocol">HTTPS</stringProp>
               <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-              <stringProp name="HTTPSampler.path">wiki/rest/api/content/${id}/child/attachment</stringProp>
+              <stringProp name="HTTPSampler.path">/rest/api/content/${id}/child/attachment</stringProp>
               <stringProp name="HTTPSampler.method">POST</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
               <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -3802,7 +3826,7 @@ log.info(&quot;jtl files getted&quot;)</stringProp>
                   </elementProp>
                   <elementProp name="Authorization" elementType="Header">
                     <stringProp name="Header.name">Authorization</stringProp>
-                    <stringProp name="Header.value">Basic ${wiki_token}</stringProp>
+                    <stringProp name="Header.value">Bearer Mzk3NjMyODg1NTg4OqxKLGxjGYO1bgnF2nelvdkKXSIM</stringProp>
                   </elementProp>
                 </collectionProp>
                 <stringProp name="TestPlan.comments">Created from cURL on 2020-02-02T16:45:33.763</stringProp>
@@ -4010,7 +4034,7 @@ log.info(&quot;jtl files getted&quot;)</stringProp>
             <stringProp name="HTTPSampler.port"></stringProp>
             <stringProp name="HTTPSampler.protocol">HTTPS</stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">wiki/rest/api/content/${id}/child/attachment</stringProp>
+            <stringProp name="HTTPSampler.path">/rest/api/content/${id}/child/attachment</stringProp>
             <stringProp name="HTTPSampler.method">POST</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -4030,7 +4054,7 @@ log.info(&quot;jtl files getted&quot;)</stringProp>
                 </elementProp>
                 <elementProp name="Authorization" elementType="Header">
                   <stringProp name="Header.name">Authorization</stringProp>
-                  <stringProp name="Header.value">Basic ${wiki_token}</stringProp>
+                  <stringProp name="Header.value">Bearer Mzk3NjMyODg1NTg4OqxKLGxjGYO1bgnF2nelvdkKXSIM</stringProp>
                 </elementProp>
               </collectionProp>
               <stringProp name="TestPlan.comments">Created from cURL on 2020-02-02T16:45:33.763</stringProp>
@@ -4066,7 +4090,7 @@ log.info(&quot;jtl files getted&quot;)</stringProp>
             <stringProp name="HTTPSampler.port"></stringProp>
             <stringProp name="HTTPSampler.protocol">https</stringProp>
             <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
-            <stringProp name="HTTPSampler.path">wiki/rest/api/content/${id}?expand=body.storage</stringProp>
+            <stringProp name="HTTPSampler.path">/rest/api/content/${id}?expand=body.storage</stringProp>
             <stringProp name="HTTPSampler.method">PUT</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -4086,7 +4110,7 @@ log.info(&quot;jtl files getted&quot;)</stringProp>
                 </elementProp>
                 <elementProp name="Authorization" elementType="Header">
                   <stringProp name="Header.name">Authorization</stringProp>
-                  <stringProp name="Header.value">Basic ${wiki_token}</stringProp>
+                  <stringProp name="Header.value">Bearer Mzk3NjMyODg1NTg4OqxKLGxjGYO1bgnF2nelvdkKXSIM</stringProp>
                 </elementProp>
                 <elementProp name="Content-Type" elementType="Header">
                   <stringProp name="Header.name">Content-Type</stringProp>

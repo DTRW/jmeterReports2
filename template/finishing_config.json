@@ -1,26 +1,26 @@
 {
 	"projects": [{
 			"Project1": {
-				"namespace": "any_namespace",
+				"namespace": "BWS",
 				"default_as_rt": "200",
 				"test_name": [{
 					"max": {
-						"folder_id": "1234457890",
-						"template_page": "2800821091",
+						"folder_id": "349414687",
+						"template_page": "351109505",
 						"slack_thread": "1631708465.000600",
 						"slack_channel": "C02EHMVN09Y"
 					}
 				}, {
 					"stability": {
-						"folder_id": "1234457890",
-						"template_page": "2800821091",
+						"folder_id": "349414687",
+						"template_page": "351109505",
 						"slack_thread": "1631708465.000600",
 						"slack_channel": "C02EHMVN09Y"
 					}
 				}, {
 					"research": {
-						"folder_id": "1234457890",
-						"template_page": "2800821091",
+						"folder_id": "349414687",
+						"template_page": "351109505",
 						"slack_thread": "1631708465.000600",
 						"slack_channel": "C02EHMVN09Y"
 					}
@@ -40,22 +40,22 @@
 				"default_as_rt": "100",
 				"test_name": [{
 					"max": {
-						"folder_id": "1234457890",
-						"template_page": "2800821091",
+						"folder_id": "349414687",
+						"template_page": "351109505",
 						"slack_thread": "1631708465.000600",
 						"slack_channel": "C02EHMVN09Y"
 					}
 				}, {
 					"stability": {
-						"folder_id": "1234457890",
-						"template_page": "2800821091",
+						"folder_id": "349414687",
+						"template_page": "351109505",
 						"slack_thread": "1631708465.000600",
 						"slack_channel": "C02EHMVN09Y"
 					}
 				}, {
 					"research": {
-						"folder_id": "1234457890",
-						"template_page": "2800821091",
+						"folder_id": "349414687",
+						"template_page": "351109505",
 						"slack_thread": "1631708465.000600",
 						"slack_channel": "C02EHMVN09Y"
 					}

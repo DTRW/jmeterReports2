@@ -1,0 +1,3 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
+1660708383590,96,jp@gc - Dummy Sampler,200,OK,Thread Group 1-1,text,true,,114,0,1,1,null,29,0,1
+1660708383894,54,jp@gc - Dummy Sampler 2,200,OK,Thread Group 1-1,text,true,,114,0,1,1,null,42,0,2
